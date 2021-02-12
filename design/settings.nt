@@ -1,0 +1,3 @@
+## settings
+orm: sqlachemy
+db_connection: 'sqlite://sapiens.db'

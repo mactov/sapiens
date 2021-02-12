@@ -1,0 +1,11 @@
+# Models
+
+environment:
+    fields:
+        - id: int, primary_key
+        - name: str, not null
+
+application:
+    fields:
+        - id: int
+        - name: str
