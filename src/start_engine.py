@@ -2,6 +2,8 @@ import os, sys
 import argparse
 import shutil
 
+import nestedtext as nt
+
 from modeler import create_engine, create_models
 
 
@@ -33,6 +35,12 @@ def create_output_folder(dir):
         sys.exit(-1)
 
 
+def get_db_engine(design_folder):
+    settings = nt.load(os.path.join(design_folder, 'settings.nt'), 'dict')
+    if 'db_engine' in settings:
+        return settings['db_engine']
+    return None
+
 design_folder, output_folder = check_arguments()
 print('>>> Launching engine ...')
 if check_design_folder(design_folder):
@@ -40,7 +48,8 @@ if check_design_folder(design_folder):
 create_output_folder(output_folder)
 print('>>> Output folder created')
 print('>>> Starting writing files')
-create_engine(design_folder, output_folder)
+db_engine = get_db_engine(design_folder)
+create_engine(design_folder, output_folder, db_engine)
 create_models(design_folder, output_folder)
 print('>>> All files written')
 
